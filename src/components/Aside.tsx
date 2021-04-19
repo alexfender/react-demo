@@ -3,9 +3,34 @@ import { ReactSVG } from 'react-svg'
 import AngleDoubleLeft from '../assets/svg/angle-double-left.svg'
 import Cap2 from '../assets/svg/cap-2.svg'
 import LogoLight from '../assets/png/logo-light.png'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Route } from 'react-router-dom'
 
 const Aside:React.FC = () => {
+
+
+  const ListItemLink = ({ to, icon, name } : {to: string, icon: string, name: string}) => {
+    return (
+      <Route path={to} children={({match}) => (
+        <li className={match ? 'menu-item menu-item-active' : 'menu-item'}>
+          <NavLink className="menu-link" to={to} activeClassName="active">
+            <ReactSVG src={icon} className="svg-icon menu-icon" />
+            <span className="menu-text">{name}</span>
+          </NavLink>
+        </li>
+      )}/>
+    );
+  }
+
+  const ListSectionLink = ({name}: {name: string}) => {
+    return (
+      <li className="menu-section ">
+        <h4 className="menu-text">{name}</h4>
+        <i className="menu-icon flaticon-more-v2"></i>
+      </li>
+    )
+  }
+
+
   return (
     <div id="kt_aside" className="aside aside-left  aside-fixed d-flex flex-column flex-row-auto">
       <div className="brand flex-column-auto " id="kt_brand" >
@@ -20,46 +45,12 @@ const Aside:React.FC = () => {
       <div id="kt_aside_menu_wrapper" className="aside-menu-wrapper flex-column-fluid">
         <div id="kt_aside_menu" className="aside-menu my-4 scroll ps ps--active-y" style={{ height: '444px', overflow: 'hidden'}}>
           <ul className="menu-nav ">
-            
-            <li className="menu-section ">
-              <h4 className="menu-text">Продажи</h4>
-              <i className="menu-icon flaticon-more-v2"></i>
-            </li>
-
-            <li className="menu-item " >
-              <NavLink className="menu-link" to="/new-order">
-                <ReactSVG src={Cap2} className="svg-icon menu-icon" />
-                <span className="menu-text">Новый заказ</span>
-              </NavLink>
-            </li>       
-
-            <li className="menu-item " >
-              <NavLink className="menu-link" to="/orders">
-                <ReactSVG src={Cap2} className="svg-icon menu-icon" />
-                <span className="menu-text">Заказы</span>
-              </NavLink>
-            </li>
-
-            <li className="menu-item " >
-              <NavLink className="menu-link" to="/corr">
-                <ReactSVG src={Cap2} className="svg-icon menu-icon" />
-                <span className="menu-text">Корректировки</span>
-              </NavLink>
-            </li>
-
-            <li className="menu-section ">
-              <h4 className="menu-text">Закупки</h4>
-              <i className="menu-icon flaticon-more-v2"></i>
-            </li>
-
-            <li className="menu-item " >
-              <NavLink className="menu-link" to="/intakes">
-                <ReactSVG src={Cap2} className="svg-icon menu-icon" />
-                <span className="menu-text">Поступления</span>
-              </NavLink>
-            </li>
-
-
+            <ListSectionLink name="Продажи"/>
+            <ListItemLink to="/new-order" icon={Cap2} name="Новый заказ" />
+            <ListItemLink to="/orders" icon={Cap2} name="Заказы" />
+            <ListItemLink to="/corr" icon={Cap2} name="Корректировки" />
+            <ListSectionLink name="Закупки"/>
+            <ListItemLink to="/intakes" icon={Cap2} name="Поступления" />
           </ul>
         </div>
       </div>

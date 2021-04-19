@@ -3,3 +3,15 @@
     left: 265px;
   }
 }
+
+.loading {
+  opacity: 0.4;
+}
+
+.paginate {
+  padding: 0;
+}
+
+.paginate li::marker {
+  content: none;
+}

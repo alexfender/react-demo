@@ -29,3 +29,19 @@ export const getCart = async () => {
   const res = await axios.get('https://adm.lider-truck.ru/adm/api/getCart.php')
   return res.data
 }
+
+export const removeCart = async (id:number) => {
+  const res = await axios.post('https://adm.lider-truck.ru/adm/api/removeFromCart.php', {id})
+  return res.data
+}
+
+export const addCart = async (product:any) => {
+  const res = await axios.post('https://adm.lider-truck.ru/adm/api/addToCart.php', {...product})
+  return res.data
+}
+
+export const changeCountCart = async ({id, count}: {id: number, count: number}) => {
+  const res = await axios.post('https://adm.lider-truck.ru/adm/api/changeCountCart.php', {id, count})
+  return res.data
+}
+

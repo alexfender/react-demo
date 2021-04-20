@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { ReactSVG } from 'react-svg'
 import Cart3 from '../assets/svg/cart3.svg'
+import DropdownCart from './DropdownCart'
 
 
 const Header:React.FC = () => {
+
+  const [show, setShow] = useState(false)
+  const refCart = useRef(null)
+
+  console.log(refCart);
+  
+
+  const showDropdownCart = () => {
+    setShow(true)
+  }
+
+
   return (
     <div className="header header-fixed" id="kt_header">
       <div className=" container-fluid d-flex align-items-stretch justify-content-between">
@@ -24,10 +37,12 @@ const Header:React.FC = () => {
         <div className="topbar">
           <div id="kt_quick_search_toggle" className="dropdown">
             <div className="topbar-item">
-              <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+              <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1" onClick={showDropdownCart}>
                 <ReactSVG src={Cart3} className="svg-icon svg-icon-xl svg-icon-primary" />
               </div>
             </div>
+            {show && <div ref={refCart}><DropdownCart /></div>}
+            
           </div>
         </div>
       </div>

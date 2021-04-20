@@ -1,14 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Route } from 'react-router-dom'
-import Aside from './components/Aside'
-import Header from './components/Header'
-import OrdersPage from './pages/OrdersPage'
-import NewOrderPage from './pages/NewOrderPage'
-import CorrPage from './pages/CorrPage'
-import IntakePage from './pages/IntakePage'
+import { useDispatch } from 'react-redux'
+
+
+import Aside from './Aside'
+import Header from './Header'
+import OrdersPage from '../pages/OrdersPage'
+import NewOrderPage from '../pages/NewOrderPage'
+import CorrPage from '../pages/CorrPage'
+import IntakePage from '../pages/IntakePage'
+import { getCart } from '../redux/actions';
 
 
 const App:React.FC = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getCart()) //Загружаем корзину 
+  }, [])
+  
   return (
     <div className="d-flex flex-column flex-root">
       <div className="d-flex flex-row flex-column-fluid page">

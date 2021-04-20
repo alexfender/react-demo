@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import TableSearchItem from '../components/TableSearchItem'
+import TableSearchItem from './TableSearchItem'
 
 const TableSearch = ({searchProducts, searchAnalogProducts}: any) => {
   return (

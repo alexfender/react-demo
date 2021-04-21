@@ -5,7 +5,7 @@ import BgImage from '../assets/jpg/bg-1.jpg'
 import DropdownCartItem from './DropdownCartItem'
 
 
-const DropdownCart = () => {
+const DropdownCart:React.FC<any> = () => {
 
   const cart = useSelector((state: any) => state.cart.cart)
 

@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getSuggestions, getProducts } from '../services/api'
 
-const InputSearch:React.FC<any> = ({onSearch}: any) => {
+const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
+
+
 
   const [value, setValue] = useState('')
   const [focused, setFocused] = useState(false)
   const [suggestions, setSuggestions] = useState([])
   const [article, setArticle] = useState('')
   const [brand, setBrand] = useState('')
+
+  useEffect(() => {
+    setBrand(selectedBrand)
+  },[selectedBrand])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
@@ -29,6 +35,11 @@ const InputSearch:React.FC<any> = ({onSearch}: any) => {
 
   const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    getProducts(value).then((products: any) => {
+      onSearch(products)
+    })
+
     setSuggestions([])
   }
 

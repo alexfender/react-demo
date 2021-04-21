@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
+import { Helmet } from 'react-helmet'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 import OrdersTable from '../components/OrdersTable'
 import { getOrders, getStatuses, getManagers } from '../services/api'
@@ -68,6 +70,10 @@ const OrdersPage:React.FC = () => {
 
   return (
     <div className={classCard}>
+      <Helmet>
+        <title>Список заказов</title>
+      </Helmet>  
+      <BreadcrumbsItem to='/orders'>Список заказов</BreadcrumbsItem>
       <div className="card-header">
         <div className="card-title">
           <h3 className="card-label">Список заказов</h3>

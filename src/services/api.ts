@@ -20,7 +20,7 @@ export const getSuggestions = async (query:string) => {
   return res.data
 }
 
-export const getProducts = async (article:string, brand: string) => {
+export const getProducts = async (article:string, brand: string | null = null) => {
   const res = await axios.get('https://adm.lider-truck.ru/adm/api/getProducts.php', {params: {article, brand}})
   return res.data
 }

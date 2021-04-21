@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import TableSearchItem from './TableSearchItem'
 
-const TableSearch = ({searchProducts, searchAnalogProducts}: any) => {
+const TableSearch:React.FC<any> = ({searchProducts, searchAnalogProducts}: any) => {
+
+
+  
+
+
+
+
+
   return (
     <table className="table table table-head-custom table-vertical-center overflow-hidden">
       <thead>
@@ -32,8 +40,6 @@ const TableSearch = ({searchProducts, searchAnalogProducts}: any) => {
           </tr>
         }
         {searchAnalogProducts && searchAnalogProducts.map((product: any) => <TableSearchItem key={product.id} product={product}/>)}
-
-        
       </tbody>
     </table>
   )

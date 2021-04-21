@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { ReactSVG } from 'react-svg'
 import Cart3 from '../assets/svg/cart3.svg'
+import BadgeCart from './BadgeCart'
 import DropdownCart from './DropdownCart'
 
 
@@ -9,12 +10,17 @@ const Header:React.FC = () => {
   const [show, setShow] = useState(false)
   const refCart = useRef(null)
 
-  console.log(refCart);
-  
 
   const showDropdownCart = () => {
-    setShow(true)
+    setShow(prev => !prev)
   }
+
+  document.addEventListener('click', (e: any) => {
+    const el = refCart?.current
+    if (!el || !(el as Node).contains(e.target)) {
+      setShow(false)
+    }
+  })
 
 
   return (
@@ -35,14 +41,14 @@ const Header:React.FC = () => {
         </div>
 
         <div className="topbar">
-          <div id="kt_quick_search_toggle" className="dropdown">
+          <div id="kt_quick_search_toggle" className="dropdown" ref={refCart}>
             <div className="topbar-item">
-              <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1" onClick={showDropdownCart}>
+              <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1" onClick={showDropdownCart} style={{position: 'relative'}}>
                 <ReactSVG src={Cart3} className="svg-icon svg-icon-xl svg-icon-primary" />
+                <BadgeCart />
               </div>
             </div>
-            {show && <div ref={refCart}><DropdownCart /></div>}
-            
+            {show && <DropdownCart />}
           </div>
         </div>
       </div>

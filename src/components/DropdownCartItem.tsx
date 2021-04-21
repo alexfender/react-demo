@@ -1,26 +1,28 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { removeCart, changeCountCart } from '../redux/actions'
 
-const DropdownCartItem = ({product}: any) => {
+const DropdownCartItem:React.FC<any> = ({product}: any) => {
 
   const dispatch = useDispatch()
 
+  const cartLoading = useSelector((state: any) => state.cart.cartLoading)
+
   const decrease = () => {
-    dispatch(changeCountCart(product.id, Number(product.count) <= 1 ? 1 : Number(product.count) - 1 ))
+    !cartLoading && dispatch(changeCountCart(product.id, Number(product.count) <= 1 ? 1 : Number(product.count) - 1 ))
   }
 
   const increase = () => {
-    dispatch(changeCountCart(product.id, Number(product.count) + 1 ))
+    !cartLoading && dispatch(changeCountCart(product.id, Number(product.count) + 1 ))
   }
 
   const remove = () => {
-    dispatch(removeCart(product.id))
+    !cartLoading && dispatch(removeCart(product.id))
   }
 
   const onChange = (e: any) => {
-    dispatch(changeCountCart(product.id, Number(e.target.value) < 1 ? 1 : Number(e.target.value) ))
+    !cartLoading && dispatch(changeCountCart(product.id, Number(e.target.value) < 1 ? 1 : Number(e.target.value) ))
   }
 
 

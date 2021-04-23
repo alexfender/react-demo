@@ -310,8 +310,18 @@
   }
 }
 
+@keyframes MuiCircularProgress-keyframes-circular-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 .MuiCircularProgress-colorPrimary {
   color: #17c191;
+}
+
+.MuiCircularProgress-circleDisableShrink {
+  animation: none;
 }
 

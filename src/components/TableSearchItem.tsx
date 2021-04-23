@@ -43,11 +43,7 @@ const TableSearchItem:React.FC<any> = ({product}: any) => {
   }
 
 
-  const progress = loading ? <div className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate" 
-              role="progressbar" 
-              style={{width: '35px', height: '35px', position: 'absolute'}}>
-              <svg className="MuiCircularProgress-svg" viewBox="22 22 44 44"><circle className="MuiCircularProgress-circle MuiCircularProgress-circleDisableShrink MuiCircularProgress-circleIndeterminate" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle></svg>
-            </div> : null
+  const progress = loading ? <div className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate" role="progressbar" style={{ width: '30px', height: '30px', position: 'absolute'}}><svg className="MuiCircularProgress-svg" viewBox="22 22 44 44"><circle className="MuiCircularProgress-circle MuiCircularProgress-circleDisableShrink MuiCircularProgress-circleIndeterminate" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle></svg></div> : null
 
   
   return (

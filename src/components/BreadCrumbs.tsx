@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom';
 
 const Breadcrumbs:React.FC = () => {
 
-  const Container = ({children}: any) => {
-  
-    
+  type Props = {
+    children: JSX.Element
+  }
+  const Container: React.FC<Props> = ({children}: Props) => {
+
     return (
       <ul className="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2">
         <li className="breadcrumb-item">
@@ -19,7 +21,12 @@ const Breadcrumbs:React.FC = () => {
     )    
   }
 
-  const Item = ({to, children}: any) => {
+  type PropsItem = {
+    to: string
+    children: JSX.Element
+  }
+
+  const Item: React.FC<PropsItem> = ({to, children}: PropsItem) => {
     return (
       <li className="breadcrumb-item">
         <NavLink className="text-muted" to={to}>{children}</NavLink>

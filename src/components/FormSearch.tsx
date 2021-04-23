@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { getSuggestions, getProducts } from '../services/api'
+import { IProduct } from '../interfaces'
 
-const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
 
+type Props = {
+  onSearch: any,
+  selectedBrand: any
+}
 
+const FormSearch:React.FC<Props> = ({onSearch, selectedBrand}: Props) => {
 
   const [value, setValue] = useState('')
   const [focused, setFocused] = useState(false)
@@ -20,7 +25,7 @@ const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
     if (e.target.value.length<3) {
       setSuggestions([])
     } else {
-      getSuggestions(e.target.value).then((product: any) => {
+      getSuggestions(e.target.value).then((product: IProduct | any) => {
         setSuggestions(product)
       })
     }
@@ -36,20 +41,20 @@ const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
   const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    getProducts(value).then((products: any) => {
+    getProducts(value).then((products: IProduct[]) => {
       onSearch(products)
     })
 
     setSuggestions([])
   }
 
-  const selectProduct = (product: any) => {
+  const selectProduct = (product: IProduct) => {
     setArticle(product.article)
     setBrand(product.brand)
     setValue(product.article)
     setSuggestions([])
 
-    getProducts(product.article, product.brand).then((products: any) => {
+    getProducts(product.article, product.brand).then((products: IProduct[]) => {
      // console.log(products);
       onSearch(products)
 
@@ -101,7 +106,7 @@ const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
 
         {suggestions.length>0 && 
           <div className="suggestion_block">
-            {suggestions.map((product: any)=> {
+            {suggestions.map((product: IProduct)=> {
               return <div className="suggestion_item" key={product.id} onClick={() => selectProduct(product)} ><b>{product.article}</b> {product.brand} {product.name} </div>
             })}
           </div>
@@ -111,4 +116,4 @@ const InputSearch:React.FC<any> = ({onSearch, selectedBrand}: any) => {
   )
 }
 
-export default InputSearch
+export default FormSearch

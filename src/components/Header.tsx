@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { ReactSVG } from 'react-svg'
 import Cart3 from '../assets/svg/cart3.svg'
 import BadgeCart from './BadgeCart'
@@ -15,12 +15,19 @@ const Header:React.FC = () => {
     setShow(prev => !prev)
   }
 
-  document.addEventListener('click', (e: any) => {
+  const toggle: any = (e: React.ChangeEvent<HTMLElement>): void => {
     const el = refCart?.current
     if (!el || !(el as Node).contains(e.target)) {
       setShow(false)
     }
-  })
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', toggle)
+    return () => {
+      document.removeEventListener('click', toggle)
+    }
+  }, [show])
 
 
   return (

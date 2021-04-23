@@ -1,3 +1,4 @@
+import { IProduct } from '../interfaces'
 import { CART_LOADING, GET_CART, PUT_CART, REMOVE_CART, ADD_CART, CHANGE_COUNT_CART } from './types'
 
 
@@ -21,7 +22,7 @@ export function removeCart(id: number) {
   }
 }
 
-export function addCart(product: any) {
+export function addCart(product: IProduct) {
   return {
     type: ADD_CART,
     payload: product
@@ -35,7 +36,7 @@ export function changeCountCart(id: number, count: number) {
   }
 }
 
-export function putCart(cart: any) {
+export function putCart(cart: {cart: IProduct[]}) {
   return {
     type: PUT_CART,
     payload: cart

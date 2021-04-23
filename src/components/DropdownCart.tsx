@@ -2,16 +2,17 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import BgImage from '../assets/jpg/bg-1.jpg'
+import { IProduct, TState } from '../interfaces'
 import DropdownCartItem from './DropdownCartItem'
 
 
-const DropdownCart:React.FC<any> = () => {
+const DropdownCart:React.FC = () => {
 
-  const cart = useSelector((state: any) => state.cart.cart)
+  const cart = useSelector((state: TState) => state.cart.cart)
 
-  const summTotal = cart!.reduce((acc: any, prod: any) => acc+prod.price*prod.count, 0)
+  const summTotal = cart!.reduce((acc: number, prod: IProduct) => acc+prod.price*prod.count, 0)
 
-  const countTotal = cart!.reduce((acc: any, prod: any) => acc+Number(prod.count), 0)
+  const countTotal = cart!.reduce((acc: number, prod: IProduct) => acc+Number(prod.count), 0)
 
   return (
     <div className="p-0 m-0 dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-lg dropdown-menu show dropdown-menu-right" 

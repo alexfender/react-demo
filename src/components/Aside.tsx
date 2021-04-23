@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { ReactSVG } from 'react-svg'
 import AngleDoubleLeft from '../assets/svg/angle-double-left.svg'
 import Cap2 from '../assets/svg/cap-2.svg'
@@ -9,6 +9,13 @@ import { NavLink, Route } from 'react-router-dom'
 
 const Aside:React.FC = () => {
 
+  const [hideAside, setHideAside] = useState(false)
+
+
+  useEffect(() => {
+    const body = document.querySelector('body')!
+    hideAside ? body.classList.add('aside-minimize') : body.classList.remove('aside-minimize')
+  }, [hideAside]) 
 
   const ListItemLink = ({ to, icon, name } : {to: string, icon: string, name: string}) => {
     return (
@@ -33,13 +40,14 @@ const Aside:React.FC = () => {
   }
 
 
+
   return (
     <div id="kt_aside" className="aside aside-left  aside-fixed d-flex flex-column flex-row-auto">
       <div className="brand flex-column-auto " id="kt_brand" >
         <a className="brand-logo" href="/">
           <img alt="logo" src={LogoLight} />
         </a>
-        <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+        <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle" onClick={() => setHideAside(prev => !prev)}>
           <ReactSVG src={AngleDoubleLeft} className="svg-icon svg-icon-xl" />
         </button>
       </div>

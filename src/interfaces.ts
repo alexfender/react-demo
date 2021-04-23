@@ -31,3 +31,10 @@ export interface IStatus {
   font_color: string
   color: string
 }
+
+export interface TState {
+  cart: {
+    cart: IProduct[],
+    cartLoading: boolean
+  }
+}

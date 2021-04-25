@@ -4,7 +4,8 @@ import {createStore, applyMiddleware} from 'redux'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
-import { BreadcrumbsProvider } from 'react-breadcrumbs-dynamic'
+//import { BreadcrumbsProvider } from 'react-breadcrumbs-dynamic'
+import {  HelmetProvider } from 'react-helmet-async';
 
 
 import App from './components/App';
@@ -28,15 +29,17 @@ saga.run(cartWatcher)
 // saga.run(cartRemoveWatcher)
 // saga.run(cartAddWatcher)
 
+//  <BreadcrumbsProvider>
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BreadcrumbsProvider>
-        <Router>
-          <App />
-        </Router>
-      </BreadcrumbsProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+          <Router>
+            <App />
+          </Router>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

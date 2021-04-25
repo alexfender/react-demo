@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { IProduct } from '../interfaces'
 import TableSearchItem from './TableSearchItem'
+import ShowMore from './ShowMore'
 
-const TableSearch:React.FC<any> = ({searchProducts, searchAnalogProducts}: any) => {
+type Props = {
+  searchProducts: IProduct[],
+  searchAnalogProducts: IProduct[]
+}
 
-
+const TableSearch:React.FC<Props> = ({searchProducts, searchAnalogProducts}: Props) => {
   
+  const [showAll, setShowAll] = useState<IProduct[]>([])
+  const [showMoreButton, setShowMoreButton] = useState<boolean>(false)
 
+  useEffect(() => {
+    setShowAll(searchAnalogProducts.slice(0,6))
+    searchAnalogProducts.length > 6 && setShowMoreButton(true)
+  },[searchAnalogProducts])
 
-
-
+  const showMore = () => {
+    setShowAll(searchAnalogProducts)
+    setShowMoreButton(false)
+  }
 
   return (
+    <>
     <table className="table table table-head-custom table-vertical-center overflow-hidden">
       <thead>
         <tr>
@@ -33,15 +47,17 @@ const TableSearch:React.FC<any> = ({searchProducts, searchAnalogProducts}: any) 
             <td colSpan={12}><h4 className="mt-2">Запрашиваемый артикул</h4></td>
           </tr>
         }
-        {searchProducts && searchProducts.map((product: any) => <TableSearchItem key={product.id} product={product}/>)}
-        {searchAnalogProducts.length>0 &&
+        {searchProducts.map((product: IProduct) => <TableSearchItem key={product.id} product={product}/>)}
+        {searchAnalogProducts!.length>0 &&
           <tr>
             <td colSpan={12}><h4 className="mt-2">Аналоги</h4></td>
           </tr>
         }
-        {searchAnalogProducts && searchAnalogProducts.map((product: any) => <TableSearchItem key={product.id} product={product}/>)}
+        {showAll.map((product: IProduct) => <TableSearchItem key={product.id} product={product}/>)}
       </tbody>
     </table>
+    {showMoreButton && <ShowMore showMore={showMore}/>}
+    </>
   )
 }
 

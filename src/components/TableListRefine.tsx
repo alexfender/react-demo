@@ -1,14 +1,16 @@
 import React from 'react'
+import { IProduct, ISearchProducts } from '../interfaces'
 import { getProducts } from '../services/api'
 
+type Props = {
+  listRefine: IProduct[],
+  onSearch: (products: ISearchProducts) => void
+}
 
-const TableSearch:React.FC<any> = ({listRefine, onSearch}: any) => {
-
+const TableSearch:React.FC<Props> = ({listRefine, onSearch}: Props) => {
 
   const onSelect = (article: string, brand: string) => {
-    getProducts(article, brand).then((products: any) => {
-  
-      
+    getProducts(article, brand).then((products: ISearchProducts) => {
       onSearch(products)
     })
   }
@@ -23,16 +25,15 @@ const TableSearch:React.FC<any> = ({listRefine, onSearch}: any) => {
         </tr>
       </thead>
       <tbody>
-        {listRefine && listRefine.map((product: any) => {
+        {listRefine!.map(({id, article, brand, name}: IProduct) => {
           return (
-            <tr key={product.id} onClick={() => onSelect(product.article, product.brand)}>
-              <td>{product.brand}</td>
-              <td>{product.article}</td>
-              <td>{product.name}</td>
+            <tr key={id} onClick={() => onSelect(article, brand)}>
+              <td>{brand}</td>
+              <td>{article}</td>
+              <td>{name}</td>
             </tr>
           )
         })}
-
       </tbody>
     </table>
   )

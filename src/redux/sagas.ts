@@ -4,6 +4,7 @@ import { getCart, removeCart, addCart, changeCountCart } from '../services/api'
 import { GET_CART, PUT_CART, REMOVE_CART, ADD_CART, CHANGE_COUNT_CART } from './types'
 
 import { cartLoading } from './actions'
+import { IAddCartAction, IChangeCountCartAction, IRemoveCartAction } from '../interfaces'
 
 export function* cartWatcher() {
   yield takeEvery(GET_CART, cartWorker)
@@ -12,7 +13,7 @@ export function* cartWatcher() {
   yield takeEvery(CHANGE_COUNT_CART, cartChangeCountWorker)
 }
 
-function* cartWorker(): Generator<StrictEffect, any, any> {
+function* cartWorker(): Generator<StrictEffect> {
   yield put(cartLoading(true))
   try {
     const payload = yield call(getCart)
@@ -20,23 +21,25 @@ function* cartWorker(): Generator<StrictEffect, any, any> {
     yield put(cartLoading(false))
   } catch(e) {
     yield put(cartLoading(false))
+    toast.error('Что то пошло не так')
   }
 }
 
-function* cartRemoveWorker(action: any): Generator<StrictEffect, any, any> {
+function* cartRemoveWorker({ payload }: IRemoveCartAction): Generator<StrictEffect> {
   yield put(cartLoading(true))
   try {
-    yield call(removeCart, action.payload)
+    yield call(removeCart, payload)
     yield call(cartWorker)
   } catch(e) {
-
+    yield put(cartLoading(true))
+    toast.error('Что то пошло не так')
   }
 }
 
+function* cartAddWorker({ payload }: IAddCartAction): Generator<StrictEffect> {
 
-function* cartAddWorker(action: any): Generator<StrictEffect, any, any> {
   try {
-    yield call(addCart, action.payload)
+    yield call(addCart, payload)
     yield call(cartWorker)
     toast.success('Товар добавлен в корзину')
   } catch(e) {
@@ -44,12 +47,13 @@ function* cartAddWorker(action: any): Generator<StrictEffect, any, any> {
   }
 }
 
-function* cartChangeCountWorker(action: any): Generator<StrictEffect, any, any> {
+function* cartChangeCountWorker({ payload }: IChangeCountCartAction): Generator<StrictEffect> {
   yield put(cartLoading(true))
   try {
-    yield call(changeCountCart, action.payload)
+    yield call(changeCountCart, payload)
     yield call(cartWorker)
   } catch(e) {
-
+    yield put(cartLoading(true))
+    toast.error('Что то пошло не так')
   }
 }

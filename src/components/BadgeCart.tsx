@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { IProduct, TState } from '../interfaces'
+import { IProduct, IState } from '../interfaces'
 
 
 const BadgeCart:React.FC = () => {
-  const cart = useSelector((state: TState) => state.cart.cart)
+  const cart = useSelector((state: IState) => state.cart.cart)
   const countTotal = cart!.reduce((acc: number, prod: IProduct) => acc+Number(prod.count), 0)
   return (
     <span 

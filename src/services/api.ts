@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { IProduct, TBrand, IGetOrdersParams } from '../interfaces'
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
-export const getOrders = async (params: any) => {
+
+export const getOrders = async (params: IGetOrdersParams) => {
   const res = await axios.get(`${baseUrl}/getOrders.php`, {params})
   return res.data
 }
@@ -22,7 +24,7 @@ export const getSuggestions = async (query:string) => {
   return res.data
 }
 
-export const getProducts = async (article:string, brand: string | null = null) => {
+export const getProducts = async (article:string, brand: TBrand = null) => {
   const res = await axios.get(`${baseUrl}/getProducts.php`, {params: {article, brand}})
   return res.data
 }
@@ -37,7 +39,7 @@ export const removeCart = async (id:number) => {
   return res.data
 }
 
-export const addCart = async (product:any) => {
+export const addCart = async (product:IProduct) => {
   const res = await axios.post(`${baseUrl}/addToCart.php`, {...product})
   return res.data
 }

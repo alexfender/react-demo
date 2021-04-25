@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
-import { Helmet } from 'react-helmet'
-import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-
+import { Helmet } from 'react-helmet-async'
+//import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import OrdersTable from '../components/OrdersTable'
 import { getOrders, getStatuses, getManagers } from '../services/api'
+import { IManager, IOrder, IStatus } from '../interfaces'
 
 const OrdersPage:React.FC = () => {
-  const [orders, setOrders] = useState([])
-  const [page, setPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState<number | string | null>(10)
+  
+  const [orders, setOrders] = useState<IOrder[]>([])
+  const [page, setPage] = useState<number>(1)
+  const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(10)
   const [ordersFrom, setOrdersFrom] = useState(1)
-  const [ordersTo, setOrdersTo] = useState(10)
-  const [number, setNumber] = useState<number | string | null>(null)
-  const [search, setSearch] = useState('')
-  const [status, setStatus] = useState<number | string | null>(null)
-  const [manager, setManager] = useState<number | string | null>(null)
-  const [dt1, setDt1] = useState('')
-  const [dt2, setDt2] = useState('')
+  const [ordersTo, setOrdersTo] = useState<number>(10)
+  const [number, setNumber] = useState<string>('')
+  const [search, setSearch] = useState<string>('')
+  const [status, setStatus] = useState<string>('')
+  const [manager, setManager] = useState<string>('')
+  const [dt1, setDt1] = useState<string>('')
+  const [dt2, setDt2] = useState<string>('')
   const [pageCount, setPageCount] = useState(0)
   const [orderCount, setOrderCount] = useState(0)
-  const [loading, setLoading] = useState(false)
-  const [statuses, setStatuses] = useState([])
-  const [managers, setManagers] = useState([])
+  const [loading, setLoading] = useState<boolean>(false)
+  const [statuses, setStatuses] = useState<IStatus[]>([])
+  const [managers, setManagers] = useState<IManager[]>([])
 
   useEffect(() => {
     getManagers().then(managers => {
@@ -32,27 +33,31 @@ const OrdersPage:React.FC = () => {
 
   useEffect(() => {
     setLoading(true)
+    let unmounted = false
     Promise.all([getStatuses(), getOrders({page,number,search,status,manager,dt1,dt2,itemsPerPage})]).then(values => {
-      setStatuses(values[0])
-      setOrders(values[1].items)
-      setPageCount(values[1].pages)
-      setOrderCount(values[1].total_count)
+      if (!unmounted) {
+        setStatuses(values[0])
+        setOrders(values[1].items)
+        setPageCount(values[1].pages)
+        setOrderCount(values[1].total_count)
 
-      setOrdersFrom(((page-1) *  Number(itemsPerPage)) + 1)
-      const to = ((page-1) *  Number(itemsPerPage)) + Number(itemsPerPage)
-      setOrdersTo(to <= values[1].total_count ? to : values[1].total_count)
-
-      setLoading(false)
-
+        setOrdersFrom(((page-1) *  Number(itemsPerPage)) + 1)
+        const to = ((page-1) *  Number(itemsPerPage)) + Number(itemsPerPage)
+        setOrdersTo(to <= values[1].total_count ? to : values[1].total_count)
+        setLoading(false)
+      }
     });
+    return () => { 
+      unmounted = true
+    }
   },[page, number, search, status, manager, dt1, dt2, itemsPerPage])
 
 
   const resetFilter = () => {
-    setNumber(null)
+    setNumber('')
     setSearch('')
-    setStatus(null)
-    setManager(null)
+    setStatus('')
+    setManager('')
     setDt1('')
     setDt2('')
   }
@@ -73,7 +78,7 @@ const OrdersPage:React.FC = () => {
       <Helmet>
         <title>Список заказов</title>
       </Helmet>  
-      <BreadcrumbsItem to='/orders'>Список заказов</BreadcrumbsItem>
+      {/* <BreadcrumbsItem to='/orders'>Список заказов</BreadcrumbsItem> */}
       <div className="card-header">
         <div className="card-title">
           <h3 className="card-label">Список заказов</h3>
@@ -169,7 +174,7 @@ const OrdersPage:React.FC = () => {
 
             <div className="d-flex align-items-center py-3">
               <select className="form-control form-control-sm font-weight-bold mr-4 border-0 bg-light false" 
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setItemsPerPage(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setItemsPerPage(Number(e.target.value))}
                 value={itemsPerPage ?? 10}
                 style={{width: '75px'}}>
                 <option className="btn" value="10">10</option>

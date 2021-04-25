@@ -1,18 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux' 
+import { IProduct, IState } from '../interfaces'
 import TableCartItem from './TableCartItem'
 
-
 const TableCart:React.FC = () => {
-
-  const cart = useSelector((state: any) => state.cart.cart)
-
-  const summTotal = cart!.reduce((acc: any, prod: any) => acc+prod.price*prod.count, 0)
-
-  const countTotal = cart!.reduce((acc: any, prod: any) => acc+Number(prod.count), 0)
-
+  
+  const cart = useSelector((state: IState) => state.cart.cart)
+  const summTotal = cart!.reduce((acc: number, prod: IProduct) => acc+prod.price*prod.count, 0)
+  const countTotal = cart!.reduce((acc: number, prod: IProduct) => acc+Number(prod.count), 0)
   const cartEmpty = <h4>Корзина пока пуста</h4>
-
   const cartFull =  
     <table className="table table table-head-custom table-vertical-center overflow-hidden">
       <thead>
@@ -28,7 +24,7 @@ const TableCart:React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {cart!.map((product: any) => <TableCartItem key={product.id} product={product}/>)}
+        {cart!.map((product: IProduct) => <TableCartItem key={product.id} product={product}/>)}
       </tbody>
       <tfoot>
         <tr>
@@ -41,7 +37,6 @@ const TableCart:React.FC = () => {
         </tr>
       </tfoot>
     </table>
-
 
   return (
     <>

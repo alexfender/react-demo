@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import { getSuggestions, getProducts } from '../services/api'
-import { IProduct } from '../interfaces'
-
+import { IProduct, ISearchProducts, TBrand } from '../interfaces'
 
 type Props = {
-  onSearch: any,
-  selectedBrand: any
+  onSearch: (products: ISearchProducts) => void,
+  selectedBrand: TBrand
 }
 
 const FormSearch:React.FC<Props> = ({onSearch, selectedBrand}: Props) => {
 
-  const [value, setValue] = useState('')
-  const [focused, setFocused] = useState(false)
-  const [suggestions, setSuggestions] = useState([])
-  const [article, setArticle] = useState('')
-  const [brand, setBrand] = useState('')
+  const [value, setValue] = useState<string>('')
+  const [focused, setFocused] = useState<boolean>(false)
+  const [suggestions, setSuggestions] = useState<IProduct[]>([])
+  const [brand, setBrand] = useState<TBrand>('')
 
   useEffect(() => {
     setBrand(selectedBrand)
   },[selectedBrand])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-    if (e.target.value.length<3) {
+    const value = (e.target as HTMLInputElement).value
+    setValue(value)
+    if (value.length<3) {
       setSuggestions([])
     } else {
-      getSuggestions(e.target.value).then((product: IProduct | any) => {
-        setSuggestions(product)
+      getSuggestions(value).then((products: IProduct[] = []) => {
+        setSuggestions(products)
       })
     }
   }
@@ -41,21 +40,20 @@ const FormSearch:React.FC<Props> = ({onSearch, selectedBrand}: Props) => {
   const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    getProducts(value).then((products: IProduct[]) => {
+    getProducts(value).then((products: ISearchProducts) => {
       onSearch(products)
     })
 
     setSuggestions([])
   }
 
-  const selectProduct = (product: IProduct) => {
-    setArticle(product.article)
-    setBrand(product.brand)
-    setValue(product.article)
+  const selectProduct = ({brand, article}: {brand: TBrand, article: string}) => {
+    setBrand(brand)
+    setValue(article)
     setSuggestions([])
 
-    getProducts(product.article, product.brand).then((products: IProduct[]) => {
-     // console.log(products);
+    getProducts(article, brand).then((products: ISearchProducts) => {
+     //console.log(products);
       onSearch(products)
 
     })

@@ -12,7 +12,9 @@ import IntakePage from '../pages/IntakePage'
 import { getCart } from '../redux/actions';
 import Subheader from './Subheader';
 import Title from './Title';
-import Breadcrumbs from './BreadCrumbs';
+
+// import Breadcrumbs from './BreadCrumbs';
+
 import Notify from './Notify';
 
 
@@ -36,7 +38,7 @@ const App:React.FC = () => {
 
             <Subheader >
               <Title />
-              <Breadcrumbs />
+              {/* <Breadcrumbs /> */}
             </Subheader>
 
             <div className="d-flex flex-column-fluid">

@@ -2,13 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import BgImage from '../assets/jpg/bg-1.jpg'
-import { IProduct, TState } from '../interfaces'
+import { IProduct, IState } from '../interfaces'
 import DropdownCartItem from './DropdownCartItem'
 
 
 const DropdownCart:React.FC = () => {
 
-  const cart = useSelector((state: TState) => state.cart.cart)
+  const cart = useSelector((state: IState) => state.cart.cart)
 
   const summTotal = cart!.reduce((acc: number, prod: IProduct) => acc+prod.price*prod.count, 0)
 

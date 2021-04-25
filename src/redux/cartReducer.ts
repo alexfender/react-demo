@@ -1,16 +1,17 @@
-import { CART_LOADING, GET_CART, PUT_CART, ADD_CART, CHANGE_COUNT_CART } from './types'
+import { TCartAction } from '../interfaces'
+import { CART_LOADING, PUT_CART, CHANGE_COUNT_CART } from './types'
 
 const initialState = {
   cart: [],
   cartLoading: false
 }
 
-export const cartReducer = (state = initialState, action: any) => {
+export const cartReducer = (state = initialState, action: TCartAction) => {
   switch(action.type) {
     case PUT_CART:   
       return {...state, cart: [...action.payload]}
     case CHANGE_COUNT_CART:   
-      return {...state, cart: state.cart.map((prod: any) => {
+      return {...state, cart: state.cart.map((prod: {id: number, count: number}) => {
         if (prod.id===action.payload.id) {
           prod.count = action.payload.count
         }

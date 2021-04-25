@@ -6,11 +6,9 @@ import LogoLight from '../assets/png/logo-light.png'
 import { NavLink, Route } from 'react-router-dom'
 
 
-
 const Aside:React.FC = () => {
 
   const [hideAside, setHideAside] = useState(false)
-
 
   useEffect(() => {
     const body = document.querySelector('body')!

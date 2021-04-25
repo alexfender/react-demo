@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ReactSVG } from 'react-svg'
 import { removeCart, changeCountCart } from '../redux/actions'
 import Trash from '../assets/svg/trash.svg'
+import { IProduct, IState } from '../interfaces'
 
-const TableCartItem:React.FC<any> = ({product}: any) => {
+type Props = {
+  product: IProduct
+}
+
+const TableCartItem:React.FC<Props> = ({product}: Props) => {
 
   const dispatch = useDispatch()
-
-  const cartLoading = useSelector((state: any) => state.cart.cartLoading)
+  
+  const cartLoading = useSelector((state: IState) => state.cart.cartLoading)
 
   const decrease = () => {
     !cartLoading && dispatch(changeCountCart(product.id, Number(product.count) <= 1 ? 1 : Number(product.count) - 1 ))
@@ -22,8 +27,14 @@ const TableCartItem:React.FC<any> = ({product}: any) => {
     !cartLoading && dispatch(removeCart(product.id))
   }
 
-  const onChange = (e: any) => {
-    !cartLoading && dispatch(changeCountCart(product.id, Number(e.target.value) < 1 ? 1 : Number(e.target.value) ))
+  const onChange = (e: React.ChangeEvent<HTMLElement>) => {
+    const value = Number((e.target as HTMLInputElement).value)
+    !cartLoading && dispatch(
+      changeCountCart(
+        product.id, 
+        value < 1 ? 1 : value
+      )
+    )
   }
 
   return (

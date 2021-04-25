@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { IProduct, TState } from '../interfaces'
+import { IProduct, IState } from '../interfaces'
 
-import { removeCart, changeCountCart } from '../redux/actions'
+import { changeCountCart } from '../redux/actions'
 
 type Props = {
   product: IProduct
@@ -12,7 +12,7 @@ const DropdownCartItem:React.FC<Props> = ({product}: Props) => {
 
   const dispatch = useDispatch()
 
-  const cartLoading = useSelector((state: TState) => state.cart.cartLoading)
+  const cartLoading = useSelector((state: IState) => state.cart.cartLoading)
 
   const decrease = () => {
     !cartLoading && dispatch(changeCountCart(product.id, Number(product.count) <= 1 ? 1 : Number(product.count) - 1 ))
@@ -20,14 +20,6 @@ const DropdownCartItem:React.FC<Props> = ({product}: Props) => {
 
   const increase = () => {
     !cartLoading && dispatch(changeCountCart(product.id, Number(product.count) + 1 ))
-  }
-
-  const remove = () => {
-    !cartLoading && dispatch(removeCart(product.id))
-  }
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    !cartLoading && dispatch(changeCountCart(product.id, Number(e.target.value) < 1 ? 1 : Number(e.target.value) ))
   }
 
   return (

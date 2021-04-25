@@ -2,7 +2,7 @@ import { IProduct } from '../interfaces'
 import { CART_LOADING, GET_CART, PUT_CART, REMOVE_CART, ADD_CART, CHANGE_COUNT_CART } from './types'
 
 
-export function cartLoading(payload: any) {
+export function cartLoading(payload: boolean) {
   return {
     type: CART_LOADING,
     payload

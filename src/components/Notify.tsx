@@ -1,9 +1,9 @@
 import React from 'react'
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Notify = () => {
+const Notify:React.FC = () => {
   return <ToastContainer 
     pauseOnFocusLoss={false} 
     autoClose={3000} 

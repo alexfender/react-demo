@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { IOrder, IProduct, IStatus } from '../interfaces'
 
 type Props = {
@@ -8,18 +9,24 @@ type Props = {
 
 const OrderListItem:React.FC<Props> = ({order, statuses}: Props) => {
 
+  const history = useHistory()
+
   const date = new Date(order.dt_insert).toLocaleDateString()
   const customer = order.type===2 ? order.org_name_short : order.user_name
   const payment = Number(order.payment_id)===2 ? 'Безнал' : 'Нал'
   const count = order.order_product!.reduce((acc:number, prod:IProduct) => acc + Number(prod.count), 0).toLocaleString()
   const summ = order.order_product!.reduce((acc:number, prod:IProduct) => acc + Number(prod.price) * Number(prod.count), 0).toLocaleString()
   const comment = order.memo.slice(0, 20) + (order.memo.length>20 ? '...' : '')
-
   const status = statuses.find((el:IStatus) => el.id===order.status_manager_id)!
 
 
+
+  const openOrder:(id: number) => void = (id: number) => {
+    history.push(`/orders/${id}`)
+  }
+
   return (
-    <tr>
+    <tr onClick={() => openOrder(order.id)}>
       <td>{order.id}</td>
       <td>{date}</td>
       <td>{customer}</td>

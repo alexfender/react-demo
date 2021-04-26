@@ -293,6 +293,7 @@
   stroke-dasharray: 80px, 200px;
   stroke-dashoffset: 0px;
 }
+
 @keyframes MuiCircularProgress-keyframes-circular-dash {
   0% {
     stroke-dasharray: 1px, 200px;
@@ -325,3 +326,8 @@
   animation: none;
 }
 
+
+
+.order-title {
+  min-width: 130px;
+}

@@ -9,6 +9,13 @@ export const getOrders = async (params: IGetOrdersParams) => {
   return res.data
 }
 
+export const getOrder = async (id: number) => {
+  const res = await axios.get(`${baseUrl}/getOrder.php`, {params: {id}})
+  console.log(res);
+  
+  return res.data
+}
+
 export const getStatuses = async () => {
   const res = await axios.get(`${baseUrl}/getStatuses.php`)
   return res.data

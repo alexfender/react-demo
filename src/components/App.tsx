@@ -16,6 +16,7 @@ import Title from './Title';
 // import Breadcrumbs from './BreadCrumbs';
 
 import Notify from './Notify';
+import OneOrderPage from '../pages/OneOrderPage';
 
 
 const App:React.FC = () => {
@@ -44,6 +45,8 @@ const App:React.FC = () => {
             <div className="d-flex flex-column-fluid">
               <div className="container">
                 <Route path="/orders" exact component={OrdersPage} />
+                <Route path="/orders/:id" exact component={OneOrderPage} />
+
                 <Route path="/new-order" exact component={NewOrderPage} />
                 <Route path="/corr" exact component={CorrPage} />
                 <Route path="/intakes" exact component={IntakePage} />
